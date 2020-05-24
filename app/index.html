@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+	<title>Новый сайт</title>
+	<meta name="description" content="">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<meta property="og:image" content="path/to/image.jpg">
+	<link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="img/favicon/apple-touch-icon-114x114.png">
+
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#000">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#000">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#000">
+
+    <style>body { opacity: 0; overflow-x: hidden; } html { background-color: #fff; }</style>
+    <link rel="stylesheet" href="build/css/style.css">
+</head>
+
+<body>
+
+	<main>
+		<div class="container flex align_center justify_center">
+			<div class="modal">
+				<form id="form">
+
+				<fieldset class="tab" style="display: none">
+					<p class="fieldset__important-p">Обязательно *</p>
+					<div class="fieldset__control-group">
+						<label class="control-label" for="af_name">Имя <span>*</span></label>
+						<div class="control-input">
+							<input type="text" id="af_name" name="name" value="" placeholder="Введите имя" class="form-control" data-validate>
+
+						</div>
+					</div>
+					<div class="fieldset__control-group">
+						<label class="control-label" for="af_phone">Ваш номер <span>*</span></label>
+						<div class="control-input">
+							<input type="text" id="af_phone" name="number" value="" placeholder="+7 (___) ___-__-__" data-validate>
+						</div>
+					</div>
+					<div class="fieldset__control-group">
+						<label class="control-label" for="af_email">Ваша почта <span>*</span></label>
+						<div class="control-input">
+							<input  type="email" id="af_email" name="email" value="" placeholder="Введите почту" data-validate>
+						</div>
+					</div>
+				</fieldset>
+
+				<fieldset class="tab" style="display: none">
+					<p class="fieldset__name-tab"> 1. Описание компании</p>
+					<div class="fieldset__control-group">
+						<label class="control-label" for="name_comp">Название компании</label>
+						<div class="control-input">
+							<input type="text" id="name_comp" name="name_comp" value="" placeholder="Мой ответ">
+						</div>
+					</div>
+					<div class="fieldset__control-group">
+						<label class="control-label" for="sfera">Сфера деятельности</label>
+						<div class="control-input">
+							<input type="text" id="sfera" name="sfera" value="" placeholder="Мой ответ">
+						</div>
+					</div>
+					<div class="fieldset__control-group">
+						<label class="control-label" for="another_comp">Вы знаете ваших конкурентов в сети? Если да, дайте на них ссылки:</label>
+						<div class="control-input">
+							<input type="text" id="another_comp" name="another_comp" value="" placeholder="Мой ответ">
+						</div>
+					</div>
+				</fieldset>
+
+				<fieldset class="tab" style="display: none">
+					<p class="fieldset__name-tab"> 2. Подробное описание работы Вашей компании</p>
+					<div class="fieldset__control-group">
+						<label class="control-label" for="product">Перечислите продукцию и услуги, которые предоставляет компания</label>
+						<div class="control-input">
+							<input type="text" id="product" name="product" value="" placeholder="Мой ответ">
+						</div>
+					</div>
+
+				</fieldset>
+
+				<div class="form__control-group">
+						<button type="button" id="next" class="btn">Следующая</button>
+						<button id="send" type="submit" class="btn btn-primary" style="display: none">Отправить</button>
+						<button type="button" id="prev" class="btn">Предыдущая</button>
+				</div>
+
+			</form>
+			</div>
+		</div>
+	</main>
+	<!--main-->
+	
+    <script src="libs/jquery/jquery.min.js"></script>
+    <script src="build/js/script.js"></script>
+	<script src="libs/maskedinput/jquery.maskedinput.min.js"></script>
+	<!--scripts-->
+</body>
+
+</html>
