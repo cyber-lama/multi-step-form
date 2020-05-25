@@ -25,6 +25,7 @@ $(document).ready(function(){
             }
         },
         changeClassElement: function(button){
+            console.log(button);
             let countAllTabs = this.$tab.length - 1; // Длинна массива с табами
 
             let clickButton = button; // Клик по какой кнопке
@@ -46,63 +47,70 @@ $(document).ready(function(){
         validateInput: function(button){
 
             let resultNumberActiveTab = this.numberActiveTab();
-            let tabChild = this.$tab[resultNumberActiveTab];
-            console.log(this.$tab[0]);
+            let tabChild = this.$tab[resultNumberActiveTab].querySelectorAll('input[data-validate]');
 
+            let input = this.$el.find('input[data-validate]');
 
-
-            let input = this.$el .find('input[data-validate]');
-            console.log(this.$el);
             let errors = [];
             let clickButton = button;
-            input.each(function () {
-                    let value = $(this).val();
-                    function checkAttributeName(){
+            for(let q = 0; q < tabChild.length; q++){
+                    let item = tabChild[q];
+                    let value = $(item).val();
+                    function checkAttributeName(item){
+                        let parent = item.closest('div');
+                        let infoDiv = parent.lastChild;
                         if (value.length < 2){
-                            console.log("Длинна введенных данных меньше допустимого значения");
+                            infoDiv.classList.add("active");
+                            infoDiv.innerHTML = 'Длинна введенных данных меньше допустимого значения';
                             return false;
                         }else if(value.length > 2 && !isNaN(value)){
-                            console.log("Введите буквенные символы");
+                            infoDiv.innerHTML = 'Введите буквенные символы';
                             return false;
                         }else {return true;}
-                    };
-                    function checkAttributePhone(){
+                    }
+                    function checkAttributePhone(item){
+                        let parent = item.closest('div');
+                        let infoDiv = parent.lastChild;
                         if (value.length < 1){
-                            console.log("Введите цифры длинной не менее 10 символов");
+                            infoDiv.classList.add("active");
+                            infoDiv.innerHTML = 'Введите цифры длинной не менее 10 символов';
                             return false;
                         }else {return true;}
                     };
-                    function checkAttributeEmail(){
+                    function checkAttributeEmail(item){
+                        let parent = item.closest('div');
+                        let infoDiv = parent.lastChild;
                         let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
                         if(reg.test(value) == false) {
-                            console.log("Введите корректный e-mail");
+                            infoDiv.classList.add("active");
+                            infoDiv.innerHTML = 'Введите корректный e-mail';
                             return false;
                         }else {return true;}
                     };
-
-
-                        if(this.getAttribute('name') === "name"){
-                            if (!checkAttributeName(this)){
-                                errors.push('Ошибка в блоке:', this);
-                            }
+                    //функции валидации
+                    if(item.getAttribute('name') === "name"){
+                        if (!checkAttributeName(item)){
+                            errors.push('Ошибка в блоке:', item);
                         }
-                        else if(this.getAttribute('name') === "number") {
-                            if (!checkAttributePhone(this)){
-                                errors.push('Ошибка в блоке:', this);
-                            }
+                    }
+                    else if(item.getAttribute('name') === "number") {
+                        if (!checkAttributePhone(item)){
+                            errors.push('Ошибка в блоке:', item);
                         }
-                        else if(this.getAttribute('name') === "email") {
-                            if (!checkAttributeEmail(this)){
-                                errors.push('Ошибка в блоке:', this);
-                            }
+                    }
+                    else if(item.getAttribute('name') === "email") {
+                        if (!checkAttributeEmail(item)){
+                            errors.push('Ошибка в блоке:', item);
                         }
-                        else if( !value ) {
+                    }
+                    else if( !value ) {
                             console.log("Заполните поле");
                             errors.push('Ошибка в блоке:', this);
                         }
-                });
-
-            if(errors){
+                    //в зависимости от атрибута вызываем функцию валидации
+            }
+            console.log(errors);
+            if(errors.length < 1){
                 this.changeClassElement(clickButton);
             }
         },
@@ -112,8 +120,9 @@ $(document).ready(function(){
                 let parent = input.closest('div');
                 for (let i = 0; i < parent.length; i++){
                     let div = document.createElement('div');
+                    div.innerHTML="";
                     parent[i].appendChild(div);
-                };
+                }
 
             }
         },
