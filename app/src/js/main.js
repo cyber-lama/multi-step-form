@@ -5,6 +5,7 @@ $(document).ready(function(){
             this.bindEventsNext();
             this.giveFirstTabActive();
             this.createDivAfterInput();
+            this.buttonsNavActive();
         },
         cacheDom: function () { // Находим все элементы с которыми будем взаимодействовать
             this.$el = $('#form');
@@ -25,12 +26,14 @@ $(document).ready(function(){
             }
         },
         changeClassElement: function(button){
-            console.log(button);
+
+
             let countAllTabs = this.$tab.length - 1; // Длинна массива с табами
 
             let clickButton = button; // Клик по какой кнопке
 
             let resultNumberActiveTab = this.numberActiveTab();// Какой ключ активного таба в момент клика по кнопке
+
 
             if(clickButton.target.getAttribute('id') === "next" && resultNumberActiveTab < countAllTabs){// Если нажата кнопка след. и ключ активного таба не больше чем длинна массива с табами переключаемся на след таб
                 var nextTab = resultNumberActiveTab + 1;
@@ -43,6 +46,10 @@ $(document).ready(function(){
             }
             this.$tab[resultNumberActiveTab].classList.remove("active");// Удаляем у всех табов класс active
             this.$tab[nextTab].classList.add("active");// Переходим на след таб
+            let lastDataAtiveTab = this.numberActiveTab();
+
+            this.buttonSendActive();
+            this.buttonsNavActive(lastDataAtiveTab);
         },
         validateInput: function(button){
 
@@ -57,36 +64,40 @@ $(document).ready(function(){
                     let item = tabChild[q];
                     let value = $(item).val();
                     function checkAttributeName(item){
-                        let parent = item.closest('div');
-                        let infoDiv = parent.lastChild;
                         if (value.length < 2){
-                            infoDiv.classList.add("active");
-                            infoDiv.innerHTML = 'Длинна введенных данных меньше допустимого значения';
+                            let message = 'Длинна введенных данных меньше допустимого значения';
+                            printErrorMessage(item, message);
                             return false;
                         }else if(value.length > 2 && !isNaN(value)){
-                            infoDiv.innerHTML = 'Введите буквенные символы';
+                            let message = 'Введите буквенные символы';
+                            printErrorMessage(item, message);
                             return false;
                         }else {return true;}
                     }
                     function checkAttributePhone(item){
-                        let parent = item.closest('div');
-                        let infoDiv = parent.lastChild;
                         if (value.length < 1){
-                            infoDiv.classList.add("active");
-                            infoDiv.innerHTML = 'Введите цифры длинной не менее 10 символов';
+                            let message = 'Введите цифры длинной не менее 10 символов';
+                            printErrorMessage(item, message);
                             return false;
                         }else {return true;}
-                    };
+                    }
                     function checkAttributeEmail(item){
-                        let parent = item.closest('div');
-                        let infoDiv = parent.lastChild;
                         let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
                         if(reg.test(value) == false) {
-                            infoDiv.classList.add("active");
-                            infoDiv.innerHTML = 'Введите корректный e-mail';
+                            let message = 'Введите корректный e-mail';
+                            printErrorMessage(item, message);
                             return false;
                         }else {return true;}
-                    };
+                    }
+                    function printErrorMessage(item, message) {
+                        let parent = item.closest('div');
+                        let infoDiv = parent.lastChild;
+                        infoDiv.classList.add("active");
+                        infoDiv.innerHTML = message;
+                        setTimeout (function() {
+                            infoDiv.classList.remove('active');
+                        }, 4000);
+                    }
                     //функции валидации
                     if(item.getAttribute('name') === "name"){
                         if (!checkAttributeName(item)){
@@ -104,13 +115,15 @@ $(document).ready(function(){
                         }
                     }
                     else if( !value ) {
-                            console.log("Заполните поле");
+                            let message = 'Заполните поле';
+                            printErrorMessage(item, message);
                             errors.push('Ошибка в блоке:', this);
                         }
                     //в зависимости от атрибута вызываем функцию валидации
+
             }
-            console.log(errors);
-            if(errors.length < 1){
+//errors.length
+            if(0 < 1){
                 this.changeClassElement(clickButton);
             }
         },
@@ -128,6 +141,35 @@ $(document).ready(function(){
         },
         giveFirstTabActive: function(){
             this.$tab[0].classList.add("active");
+        },
+        buttonSendActive: function(){
+            let resultNumberActiveTab = this.numberActiveTab();
+            let countAllTabs = this.$tab.length - 1;
+
+            if(resultNumberActiveTab === countAllTabs){
+                this.$buttonSend[0].style.display = "inline-block";
+            }else {
+                this.$buttonSend[0].style.display = "none";
+            }
+        },
+        buttonsNavActive:function(lastDataAtiveTab){
+            console.log(lastDataAtiveTab)
+            let countAllTabs = this.$tab.length - 1;
+            let zero = 0;
+
+
+            if(lastDataAtiveTab < countAllTabs){
+                this.$buttonNext[0].classList.add('js-ripple');
+
+            }else{
+                this.$buttonNext[0].classList.toggle('js-ripple');
+            }
+            if(lastDataAtiveTab > zero){
+                console.log('Наша переменная больше нуля:' + lastDataAtiveTab);
+                this.$buttonPrev[0].classList.add('js-ripple');
+            }else if(lastDataAtiveTab > zero){
+                this.$buttonPrev[0].classList.toggle('js-ripple');
+            }
         },
         consoleClick: function (element) {
             console.log(element)
